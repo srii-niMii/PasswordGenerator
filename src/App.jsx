@@ -1,4 +1,4 @@
-import { useState ,useCallback,useRef} from 'react'
+import { useState, useCallback, useRef } from 'react'
 
 function App() {
   const [password, setpassword] = useState("")
@@ -7,39 +7,39 @@ function App() {
   const [symbol, setsymbol] = useState(false)
   const [strength, setstrength] = useState(" Password ")
 
-  const passwordRef=useRef(null)
+  const passwordRef = useRef(null)
 
-  const passwordGenerator = useCallback(()=>{
-     let pass = ""
-     let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-     if(number) str+="0123456789"
-     if(symbol) str+="!@#$%^&*()_+{}"
-     
-    for(let i=1;i<=length;i++){
-      let char=Math.floor(Math.random()*str.length+1)
-      pass+=str.charAt(char)
+  const passwordGenerator = useCallback(() => {
+    let pass = ""
+    let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    if (number) str += "0123456789"
+    if (symbol) str += "!@#$%^&*()_+{}"
+
+    for (let i = 1; i <= length; i++) {
+      let char = Math.floor(Math.random() * str.length + 1)
+      pass += str.charAt(char)
     }
     setpassword(pass)
     evaluateStrength(pass)
 
 
-  },[length,number,symbol,setpassword])
+  }, [length, number, symbol, setpassword])
 
-  const copyPasswordToClipboard = useCallback(()=>{
+  const copyPasswordToClipboard = useCallback(() => {
     passwordRef.current?.select();
     window.navigator.clipboard.writeText(password)
-  },[password])
-   
-  const evaluateStrength=(pass)=>{
-    let score=0
-    if(pass.length>=12) score++;
-    if(/[A-Z]/.test(pass)) score++;
-    if(/[a-z]/.test(pass)) score++;
-    if(/[0-9]/.test(pass)) score++;
-    if(/[!@#$%^&*()_+{}]/.test(pass)) score++;
+  }, [password])
 
-    if(score<=2) setstrength("Weak");
-    else if(score===3||score===4) setstrength("Medium");
+  const evaluateStrength = (pass) => {
+    let score = 0
+    if (pass.length >= 12) score++;
+    if (/[A-Z]/.test(pass)) score++;
+    if (/[a-z]/.test(pass)) score++;
+    if (/[0-9]/.test(pass)) score++;
+    if (/[!@#$%^&*()_+{}]/.test(pass)) score++;
+
+    if (score <= 2) setstrength("Weak");
+    else if (score === 3 || score === 4) setstrength("Medium");
     else setstrength("Strong");
   }
 
@@ -55,12 +55,12 @@ function App() {
         </div>
 
         <div>
-          <label className='mt-1 font-semibold text-white '>Strength : 
+          <label className='mt-1 font-semibold text-white '>Strength :
             <span className={
               strength === "Weak" ? "text-red-500" :
                 strength === "Medium" ? "text-yellow-500" :
                   strength === "Strong" ? "text-green-500" : "text-gray-600"
-            }> {strength} 
+            }> {strength}
             </span> </label>
         </div>
 
@@ -74,7 +74,7 @@ function App() {
             <input type="checkbox" defaultChecked={number} id='numberInput'
               onChange={() => {
                 setnumber((prev) => !prev);
-              }} className='scale-150 accent-blue-400 cursor-pointer'/>
+              }} className='scale-150 accent-blue-400 cursor-pointer' />
             <label className='text-white ' > Include Number</label>
           </div>
 
@@ -82,7 +82,7 @@ function App() {
             <input type="checkbox" defaultChecked={symbol} id='numberInput'
               onChange={() => {
                 setsymbol((prev) => !prev);
-              }} className='scale-150  accent-blue-400 cursor-pointer'/>
+              }} className='scale-150  accent-blue-400 cursor-pointer' />
             <label className='text-white '> Include Symbol</label>
           </div>
         </div>
